@@ -26,58 +26,58 @@ console.log(isProd)
 console.log(isDev)
 
 
-module.exports =  {
-    context: path.resolve(__dirname, 'src'),
-    mode: 'development',
-    entry: ['@babel/polyfill', './index.js'],
-    output: {
-        filename: fileName('js'),
-        path: path.resolve(__dirname, 'dist')
-    },
-    resolve: {
-        extensions: ['.js'],
-        alias: {
-            '@': path.resolve(__dirname, 'src'),
-            '@core': path.resolve(__dirname, 'src/core')
-        }
-    },
-    devtool: isDev ? 'source-map' : false,
-    devServer: {
-        port: 3000,
-        hot: isDev
-    },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HTMLWebpackPlugin({
-            template: 'index.html'
-        }),
-        new CopyPlugin({
-            patterns: [
-                { from: path.resolve(__dirname, 'src/favicon.ico'),
-                  to: path.resolve(__dirname, 'dist') 
-                }
-            ]
-        }),
-        new MiniCssExtractPlugin({
-            filename: fileName('css')
-        })
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'sass-loader'
-                ],
-            },
-            { 
-                test: /\.js$/, 
-                exclude: /node_modules/,
-                use: jsLoaders()
-            }
-        ]
+module.exports = {
+  context: path.resolve(__dirname, 'src'),
+  mode: 'development',
+  entry: ['@babel/polyfill', './index.js'],
+  output: {
+    filename: fileName('js'),
+    path: path.resolve(__dirname, 'dist')
+  },
+  resolve: {
+    extensions: ['.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@core': path.resolve(__dirname, 'src/core')
     }
-
+  },
+  devtool: isDev ? 'source-map' : false,
+  devServer: {
+    port: 3000,
+    hot: isDev
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HTMLWebpackPlugin({
+      template: 'index.html'
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/favicon.ico'),
+          to: path.resolve(__dirname, 'dist')
+        }
+      ]
+    }),
+    new MiniCssExtractPlugin({
+      filename: fileName('css')
+    })
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: jsLoaders()
+      }
+    ]
+  }
 }
